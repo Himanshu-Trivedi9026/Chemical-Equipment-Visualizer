@@ -36,6 +36,15 @@ Demonstrate hybrid extensibility (Web + Desktop)
 |   (React + Vite) |
 +------------------+
 
+🔐 Demo Login Credentials
+
+To access the web application, use the following demo credentials:
+
+Username: admin  
+Password: Admin@1234 
+
+These credentials are provided for evaluation and demonstration purposes only.
+
 
 Key Point:
 
