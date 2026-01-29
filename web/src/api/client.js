@@ -1,18 +1,25 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/",
+  // ✅ Use environment variable if available (Vercel / production)
+  // ✅ Fallback to localhost for development
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/",
 });
 
-// Attach token automatically
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("auth_token");
+// ================= TOKEN INTERCEPTOR =================
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("auth_token");
 
-  if (token) {
-    config.headers.Authorization = `Token ${token}`;
+    if (token) {
+      config.headers.Authorization = `Token ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-
-  return config;
-});
+);
 
 export default api;
