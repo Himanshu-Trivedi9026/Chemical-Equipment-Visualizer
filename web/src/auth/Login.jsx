@@ -15,14 +15,11 @@ export default function Login() {
     try {
       const res = await axios.post(
         "http://127.0.0.1:8000/api/auth/login/",
-        { username, password },
-        { headers: { "Content-Type": "application/json" } }
+        { username, password }
       );
 
-      // ✅ ONLY PLACE TOKEN IS STORED
+      // ✅ Store token only on successful login
       localStorage.setItem("auth_token", res.data.token);
-
-      // Redirect after login
       navigate("/");
     } catch {
       setError("Invalid username or password");
@@ -32,14 +29,18 @@ export default function Login() {
   return (
     <div className="login-wrapper">
       <form className="card glass login-card" onSubmit={handleSubmit}>
-        <h2>Sign In</h2>
+        <h2>Login (Optional)</h2>
+
+        <p style={{ fontSize: "13px", color: "#6b7280" }}>
+          You may login for a personal session or continue
+          using the demo mode.
+        </p>
 
         <input
           type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          required
         />
 
         <input
@@ -47,11 +48,19 @@ export default function Login() {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
 
         <button className="btn primary" type="submit">
           Login
+        </button>
+
+        <button
+          type="button"
+          className="btn"
+          onClick={() => navigate("/")}
+          style={{ marginTop: "10px" }}
+        >
+          Continue as Guest
         </button>
 
         {error && <p className="error-text">{error}</p>}
